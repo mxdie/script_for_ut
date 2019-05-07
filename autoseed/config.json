@@ -4,7 +4,7 @@
         "passkey":""
     },
     "path":{
-        "ut_save":"",
-        "ut_load":""
+        "ut_save":"D:/save/",
+        "ut_load":"D:/load/"
     }
 }

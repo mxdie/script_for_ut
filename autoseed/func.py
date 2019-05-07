@@ -73,6 +73,7 @@ def get_bgm_url(anime_name: str)-> str:
 
     # 抓取ID和年份
     bgm_id=re.findall(r'/subject/(.+?)" class="l"',html)
+    if not bgm_id:return ''
     bgm_year=re.findall(r'info tip">(.+?)年',html,re.S)
     bgm_year=''.join(bgm_year).strip(',\n')
     bgm_year=bgm_year.split('\n')
