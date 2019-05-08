@@ -98,6 +98,6 @@ CHAPTERS.......: {chapter}[/code][/font]'''.format(
 
 
 if __name__ == '__main__':
-    content = get_mediainfo('[Sakurato.sub][One Punch Man 2nd Season][02][GB][720P].mp4')
+    content = get_mediainfo(sys.argv[1])
     print(content)
     over = input()
