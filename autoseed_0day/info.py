@@ -83,7 +83,7 @@ def get_douban_jj(douban_url):
     mainpic_info_=','.join(str(v) for v in mainpic_info_)
     mainpic_url=re.findall(r'public(.+?)"',mainpic_info_)
     mainpic_url=''.join(mainpic_url)
-    mainpic_url='http://img3.doubanio.com/view/movie_poster_cover/lpst/public'+mainpic_url
+    mainpic_url='https://img1.doubanio.com/view/photo/l_ratio_poster/public/'+mainpic_url
 
     # 获取主要信息
     film_info_=','.join(str(v) for v in film_info_)
