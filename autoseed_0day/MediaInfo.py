@@ -57,9 +57,9 @@ def get_mediainfo(path):
         if len(text_list) == 1:
             text_text = 'SUBTITLES......: ' + text_list[0]
         else:
-            text_text = 'SUBTITLES' + str(1) + '....: ' + text_list[0]
+            text_text = 'SUBTITLES' + str(1) + '.....: ' + text_list[0]
             for i in range(2, len(text_list) + 1):
-                text_text = '\n' + text_text + 'SUBTITLES' + str(i) + '....: ' + text_list[i - 1]
+                text_text = text_text +'\n'+ 'SUBTITLES' + str(i) + '.....: ' + text_list[i - 1]
     else:
         text_text = ''
 
