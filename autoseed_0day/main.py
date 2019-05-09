@@ -45,7 +45,14 @@ f_name_list.reverse()
 m_name=' '.join(f_name_list[0:len(f_name_list)-m_year_index-1])
 print(m_name+' '+m_year)
 #获取db链接
-db_url=info.get_douban_url(m_name,m_year)
+db_url=''
+for i in range(3):
+    try:
+        db_url=info.get_douban_url_db(m_name,m_year)
+        break
+    except:
+        pass
+if not db_url: db_url=info.get_douban_url(m_name,m_year)
 #获取简介
 if db_url=='https://movie.douban.com/subject/':
     db_url=input('自动搜索失败，输入豆瓣链接(https://movie.douban.com/subject/xx)\n:')

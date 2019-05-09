@@ -2,6 +2,29 @@ import re
 from urllib import request
 from urllib import parse
 from bs4 import BeautifulSoup
+import json
+########################获取IMDB地址########################
+def get_douban_url_db(film_name,film_year):
+    # url转义
+    film_name_search=parse.quote(film_name)
+    film_name_search=film_name_search.replace('.','_')
+    # 获取搜索关键字
+    url_p2=film_name_search
+    url_p1='https://v2.sg.media-imdb.com/suggestion/f/'
+    film_name_url=url_p1+url_p2+'.json'
+    headers= {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
+    film_name_html=request.Request(url=film_name_url,headers=headers)
+    with request.urlopen(film_name_html) as f:
+          imdbinfo= json.loads(f.read().decode('utf-8'))
+    imdbid = ''
+    for info in imdbinfo['d']:
+        if info['y'] == int(film_year):
+            imdbid = info['id']
+    if not imdbid:return
+    film_name_html=request.Request(url='https://api.douban.com/v2/movie/imdb/'+imdbid,headers=headers)
+    with request.urlopen(film_name_html) as f:
+          doubaninfo= json.loads(f.read().decode('utf-8')) 
+    return doubaninfo['alt'].replace('/movie/','/subject/')   
 
 ########################获取豆瓣地址########################
 def get_douban_url(film_name,film_year):
