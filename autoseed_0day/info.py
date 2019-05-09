@@ -10,7 +10,7 @@ def get_douban_url_db(film_name,film_year):
     film_name_search=film_name_search.replace('.','_')
     # 获取搜索关键字
     url_p2=film_name_search
-    url_p1='https://v2.sg.media-imdb.com/suggestion/f/'
+    url_p1='https://v2.sg.media-imdb.com/suggestion/'+film_name[0].lower()+'/'
     film_name_url=url_p1+url_p2+'.json'
     headers= {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
     film_name_html=request.Request(url=film_name_url,headers=headers)

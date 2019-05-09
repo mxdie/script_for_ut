@@ -10,7 +10,7 @@ from NexusFunc import NexusFunc
 f_path=sys.argv[1]
 f_name=sys.argv[2]
 f_name2=sys.argv[3]
-if 'wiki' not in f_name and 'WIKI' not in f_name:
+if 'wiki' not in f_name and 'WIKI' not in f_name and 'WiKi' not in f_name:
     sys.exit()
 if f_name2:
     print('文件路径： '+f_path+'/'+f_name)
