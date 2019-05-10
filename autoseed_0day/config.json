@@ -6,5 +6,17 @@
     "path":{
         "ut_save":"D:/save/",
         "ut_load":"D:/load/"
+    },
+    "namerule":{
+        "wiki":[401,"name.year.resolution.source.codec-group"],
+        "cmct":[401,""]
+    },
+    "compile":{
+        "name":"(.+?)",
+        "year":"(\\d+)",
+        "resolution":"(720p|1080p|2160p)",
+        "source":"(bluray|web-dl)",
+        "codec":"(x264|x265|h\\.264|h\\.265|.+?)",
+        "audio":"(DTS)"
     }
 }
