@@ -8,15 +8,22 @@
         "ut_load":"D:/load/"
     },
     "namerule":{
-        "wiki":[401,"name.year.resolution.source.codec-group"],
-        "cmct":[401,""]
+        "wiki":[401,"name.year.resolution.source.codec-group",1],
+        "cmct":[401,""],
+        "Nekomoe kissaten":[403,"[group][name][ep][resolution][sub].format"],
+        "DMG":[[403,"[group] name [source]"],
+                [403,"[group][name][ep][resolution][sub].format"]]
     },
     "compile":{
         "name":"(.+?)",
         "year":"(\\d+)",
+        "ep":"(\\d+)",
         "resolution":"(720p|1080p|2160p)",
-        "source":"(bluray|web-dl)",
+        "source":"(bluray|web-dl|bdrip|.+?)",
+        "sub":"(GB|CHS|BIG5|CHT|SC|SC&JP|.+?)",
         "codec":"(x264|x265|h\\.264|h\\.265|.+?)",
-        "audio":"(DTS)"
+        "audio":"(DTS|.+?)",
+        "format":"(mp4|mkv)",
+        "group":""
     }
 }

@@ -6,11 +6,15 @@ import time
 import requests
 from shutil import copyfile
 from NexusFunc import NexusFunc
+from fenci import fenci
+import func
 
 f_path=sys.argv[1]
 f_name=sys.argv[2]
 f_name2=sys.argv[3]
-if 'wiki' not in f_name and 'WIKI' not in f_name and 'WiKi' not in f_name:
+nameinfo = fenci(f_name).res
+if nameinfo['msg'] !=666:
+    print(nameinfo['msg'])
     sys.exit()
 if f_name2:
     print('文件路径： '+f_path+'/'+f_name)
@@ -22,6 +26,7 @@ with open('config.json','r') as f:
     config = json.load(f)
 ut_save = config['path']['ut_save']
 ut_load = config['path']['ut_load']
+'''
 if not f_name2:
     m_name.replace('.mp4','')
     m_name.replace('.mkv','')
@@ -44,48 +49,107 @@ for year in range(now_year,1888,-1):
 f_name_list.reverse()
 m_name=' '.join(f_name_list[0:len(f_name_list)-m_year_index-1])
 print(m_name+' '+m_year)
-#获取db链接
-db_url=''
-for i in range(3):
-    try:
-        db_url=info.get_douban_url_db(m_name,m_year)
-        break
-    except:
-        pass
-if not db_url: db_url=info.get_douban_url(m_name,m_year)
-#获取简介
-if db_url=='https://movie.douban.com/subject/':
-    db_url=input('自动搜索失败，输入豆瓣链接(https://movie.douban.com/subject/xx)\n:')
-name_ch,imdblianjie,jianjie=info.get_douban_jj(db_url)
 '''
-check=input(name_ch+'(y/n)')
-if check=='n' or check=='N':
-    db_url=input('输入豆瓣链接(https://movie.douban.com/subject/xx)\n:')
+if nameinfo['type'] == 401:
+    #获取db链接
+    db_url=''
+    for i in range(3):
+        try:
+            db_url=info.get_douban_url_db(nameinfo['name'],nameinfo['year'])
+            break
+        except:
+            pass
+    if not db_url: db_url=info.get_douban_url(nameinfo['name'],nameinfo['year'])
+    #获取简介
+    if db_url=='https://movie.douban.com/subject/':
+        db_url=input('自动搜索失败，输入豆瓣链接(https://movie.douban.com/subject/xx)\n:')
     name_ch,imdblianjie,jianjie=info.get_douban_jj(db_url)
-'''
-jianjie=jianjie+'\n'+'\n'+info.douban_hj(db_url)
+    '''
+    check=input(name_ch+'(y/n)')
+    if check=='n' or check=='N':
+        db_url=input('输入豆瓣链接(https://movie.douban.com/subject/xx)\n:')
+        name_ch,imdblianjie,jianjie=info.get_douban_jj(db_url)
+    '''
+    jianjie=jianjie+'\n'+'\n'+info.douban_hj(db_url)
+    if f_name2:
+        mi=MediaInfo.get_mediainfo(f_path+'/'+f_name)
+    else:
+        try:
+            mi=MediaInfo.get_mediainfo(f_path+'/'+f_name+'.mkv')
+        except:
+            mi = ''
+    jianjie=jianjie+'\n'+'\n'+mi
+    print(jianjie)
+    # 移动种子
+    torrent_path=ut_save+f_name+'.torrent'
+    copyfile(torrent_path,f_name+'.torrent')
+    #填写表单
+    files ={'file': open(f_name+'.torrent', 'rb')}
+    data={"type":'401',
+        "name":f_name
+        "small_descr":name_ch,
+        "url":imdblianjie,
+        "dburl":db_url,
+        "descr":jianjie,
+        "uplver":'yes'}
+elif nameinfo['type'] == 403:
+    
+    with open('data.json','r') as f:
+        data = json.load(f)
+    if nameinfo['name'] in data['anime']:
+        bgm_url = data['anime'][nameinfo['name']]
+        bgm_jj = func.get_bgm_jj(bgm_url)
+    else:
+        search_name = nameinfo['name']
+        while 1:
+            bgm_url=func.get_bgm_url(search_name)
+            if not bgm_url:
+                search_name = input('搜不到bgm链接，输入这个番更通俗易懂的名字叭：')
+                continue
+            bgm_jj = func.get_bgm_jj(bgm_url)
+            confirm = input('中译名是'+bgm_jj[1]+'吗：(y/n)')
+            if confirm in ('y','Y',''):
+                break
+            else:
+                bgm_url = input('那直接输入bgm链接叭：')
+                bgm_jj = func.get_bgm_jj(bgm_url)
+                break
+        data['anime'][nameinfo['name']] = bgm_url
+    with open('data.json','w') as f:
+        json.dump(data,f)
+    #mediainfo
+    vedio_file_path=vedio_file_path.replace('"','/')
+    vedio_path=vedio_file_path+bt_name
+    print(vedio_path)
+    #try:
+    mi = MediaInfoDLL3.MediaInfo()
+    mi.Open(vedio_path)
+    info = mi.Inform()
+    mi.Close()
+    print(info)
+    #except:
+    #    info =''
+    #编辑上传信息
+    nameinfo.setdefault('ep', default='TV Fin')
+    up_name="{name}.{ep}.{source}.{sub}.{resolution}.{format}-{group}".format(nameinfo)
+    fubiaoti=bgm_jj[1]+' '+bgm_jj[2]
+    imdblianjie=''
+    douban_url=''
+    jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+info+'[/code]'+'[/fold]'
+    print(up_name)
+    print(fubiaoti)
+    print(jianjie)
+    #填写表单
+    files ={'file': open(bt_name+'.torrent', 'rb')}
+    data={"type":'403',
+        "name":up_name,
+        "small_descr":fubiaoti,
+        "url":imdblianjie,
+        "dburl":douban_url,
+        "descr":jianjie,
+        "uplver":'yes'}
 #获取mediainfo
-if f_name2:
-    mi=MediaInfo.get_mediainfo(f_path+'/'+f_name)
-else:
-    try:
-        mi=MediaInfo.get_mediainfo(f_path+'/'+f_name+'.mkv')
-    except:
-        mi = ''
-jianjie=jianjie+'\n'+'\n'+mi
-print(jianjie)
-# 移动种子
-torrent_path=ut_save+f_name+'.torrent'
-copyfile(torrent_path,f_name+'.torrent')
-#填写表单
-files ={'file': open(f_name+'.torrent', 'rb')}
-data={"type":'401',
-       "name":up_name,
-       "small_descr":name_ch,
-       "url":imdblianjie,
-       "dburl":db_url,
-       "descr":jianjie,
-       "uplver":'yes'}
+
 #发布
 nanyang = NexusFunc('nanyang')
 TorId= nanyang.upload(files, data)
