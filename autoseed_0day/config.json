@@ -1,18 +1,18 @@
 {
     "nanyang":{
         "url":"https://nanyangpt.com/",
-        "cookie":"_ga=; c_secure_uid=; c_secure_pass=; c_secure_ssl=D; c_secure_tracker_ssl=; c_secure_login=; __cfduid=; _gid="
+        "cookie":"_ga=; c_secure_uid=; c_secure_pass=; c_secure_ssl=; c_secure_tracker_ssl=; c_secure_login=; __cfduid="
     },
     "path":{
-        "ut_save":"D:/save/",
-        "ut_load":"D:/load/"
+        "ut_save":"E:/torrent/",
+        "ut_load":"E:/load/"
     },
     "namerule":{
-        "wiki":[401,"name.year.resolution.source.codec-group",1],
+        "wiki":[401,"name.year.resolution.source.codec-group"],
         "cmct":[401,""],
-        "Nekomoe kissaten":[403,"[group][name][ep][resolution][sub].format"],
+        "Nekomoe kissaten":[403,"[group][name][ep][resolution][sub].format","{name}.{ep}.TVRip.{sub}.{resolution}.{format}-{group}"],
         "DMG":[[403,"[group] name [source]"],
-                [403,"[group][name][ep][resolution][sub].format"]]
+                [403,"[group][name][ep][resolution][sub].format","{name}.{ep}.TVRip.{sub}.{resolution}.{format}-{group}"]]
     },
     "compile":{
         "name":"(.+?)",
