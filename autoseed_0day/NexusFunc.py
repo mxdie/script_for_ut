@@ -57,7 +57,8 @@ class NexusFunc():
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload成功 ID:'+ TorId)
         return TorId
     
-    def download(self, TorId, DlPath='', DlUrl= '' ):
+    def download(self, TorId='', DlPath='', DlUrl= '' ):
+        if not TorId: return
         if not DlUrl: DlUrl= self.url+ 'download.php?id=' +TorId
         for i in range(3):
             try:

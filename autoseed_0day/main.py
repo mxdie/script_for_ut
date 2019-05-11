@@ -10,6 +10,7 @@ from fenci import fenci
 import func
 import MediaInfoDLL3
 import bencode
+import os
 f_path=sys.argv[1]
 f_name=sys.argv[2]
 f_name2=sys.argv[3]
@@ -167,3 +168,6 @@ nanyang = NexusFunc('nanyang')
 TorId= nanyang.upload(files, data)
 #下载种子
 nanyang.download(TorId, ut_load)
+# 删除
+os.remove('temp.torrent')
+os.remove(f_name+'.torrent')
