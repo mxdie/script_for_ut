@@ -7,6 +7,7 @@ class fenci():
         self.filename= filename
         self.res = {'msg':666}
         self.group = ''
+        self.res['upname'] = filename
         try:
             with open('config.json','r') as f:
                 config = json.load(f)
@@ -24,14 +25,17 @@ class fenci():
         if not self.group:
             self.res['msg'] = 'suport error'
             return
+        self.uprule = ''
         if isinstance(namerule[group][0],int):
             self.res['type'] = namerule[group][0]
             self.rule = namerule[group][1]
+            if len(namerule[group]) ==3: self.uprule =namerule[group][2]
             self.fenci_()
         else:
             for i in namerule[group]:
                 self.res['type'] = i[0]
                 self.rule = i[1]
+                if len(i) ==3: self.uprule =i[2]
                 self.fenci_()
                 if self.res['msg'] == 666:break
 
@@ -60,7 +64,10 @@ class fenci():
         except:
             self.res['msg'] = 'match error'
             return
+        if  self.res['msg'] == 'match error':self.res['msg'] = 666
         self.res.update(dict)
+        if self.uprule:
+            dict['name'] = dict['name'].replace(' ','.')
+            self.res['upname'] = self.uprule.format(**dict)
+        
 
-info = fenci('[DMG] 劇場版 夜は短し歩けよ乙女 [BDRip]')
-print(info.res)

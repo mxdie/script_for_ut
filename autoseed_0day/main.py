@@ -8,11 +8,12 @@ from shutil import copyfile
 from NexusFunc import NexusFunc
 from fenci import fenci
 import func
-
+import MediaInfoDLL3
 f_path=sys.argv[1]
 f_name=sys.argv[2]
 f_name2=sys.argv[3]
 nameinfo = fenci(f_name).res
+print(f_name)
 if nameinfo['msg'] !=666:
     print(nameinfo['msg'])
     sys.exit()
@@ -50,6 +51,9 @@ f_name_list.reverse()
 m_name=' '.join(f_name_list[0:len(f_name_list)-m_year_index-1])
 print(m_name+' '+m_year)
 '''
+# 移动种子
+torrent_path=ut_save+f_name+'.torrent'
+copyfile(torrent_path,f_name+'.torrent')
 if nameinfo['type'] == 401:
     #获取db链接
     db_url=''
@@ -80,13 +84,11 @@ if nameinfo['type'] == 401:
             mi = ''
     jianjie=jianjie+'\n'+'\n'+mi
     print(jianjie)
-    # 移动种子
-    torrent_path=ut_save+f_name+'.torrent'
-    copyfile(torrent_path,f_name+'.torrent')
+
     #填写表单
     files ={'file': open(f_name+'.torrent', 'rb')}
     data={"type":'401',
-        "name":f_name
+        "name":f_name,
         "small_descr":name_ch,
         "url":imdblianjie,
         "dburl":db_url,
@@ -117,32 +119,33 @@ elif nameinfo['type'] == 403:
         data['anime'][nameinfo['name']] = bgm_url
     with open('data.json','w') as f:
         json.dump(data,f)
-    #mediainfo
-    vedio_file_path=vedio_file_path.replace('"','/')
-    vedio_path=vedio_file_path+bt_name
-    print(vedio_path)
+
     #try:
     mi = MediaInfoDLL3.MediaInfo()
-    mi.Open(vedio_path)
-    info = mi.Inform()
+    if f_name2:
+        mi.Open(f_path+'/'+f_name)
+    else:
+        try:
+            mi.Open(f_path+'/'+f_name+'.mkv')
+        except:
+            pass
+    spinfo = mi.Inform()
     mi.Close()
-    print(info)
+    print(spinfo)
     #except:
     #    info =''
     #编辑上传信息
-    nameinfo.setdefault('ep', default='TV Fin')
-    up_name="{name}.{ep}.{source}.{sub}.{resolution}.{format}-{group}".format(nameinfo)
     fubiaoti=bgm_jj[1]+' '+bgm_jj[2]
     imdblianjie=''
     douban_url=''
-    jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+info+'[/code]'+'[/fold]'
-    print(up_name)
+    jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+spinfo+'[/code]'+'[/fold]'
+    print(nameinfo['upname'])
     print(fubiaoti)
     print(jianjie)
     #填写表单
-    files ={'file': open(bt_name+'.torrent', 'rb')}
+    files ={'file': open(f_name+'.torrent', 'rb')}
     data={"type":'403',
-        "name":up_name,
+        "name":nameinfo['upname'],
         "small_descr":fubiaoti,
         "url":imdblianjie,
         "dburl":douban_url,
