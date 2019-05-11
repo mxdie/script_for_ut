@@ -9,6 +9,7 @@ from NexusFunc import NexusFunc
 from fenci import fenci
 import func
 import MediaInfoDLL3
+import bencode
 f_path=sys.argv[1]
 f_name=sys.argv[2]
 f_name2=sys.argv[3]
@@ -98,6 +99,14 @@ elif nameinfo['type'] == 403:
     
     with open('data.json','r') as f:
         data = json.load(f)
+    file= open(f_name+'.torrent', 'rb')
+    bt=bencode.decode(file.read())
+    file.close()
+    bt['announce']='https://tracker.nanyangpt.com/announce.php'
+    bt['announce-list']=[['https://tracker.nanyangpt.com/announce.php']]
+    file=open('temp.torrent', 'wb')
+    file.write(bencode.encode(bt))
+    file.close()
     if nameinfo['name'] in data['anime']:
         bgm_url = data['anime'][nameinfo['name']]
         bgm_jj = func.get_bgm_jj(bgm_url)
@@ -143,7 +152,7 @@ elif nameinfo['type'] == 403:
     print(fubiaoti)
     print(jianjie)
     #填写表单
-    files ={'file': open(f_name+'.torrent', 'rb')}
+    files ={'file': open('temp.torrent', 'rb')}
     data={"type":'403',
         "name":nameinfo['upname'],
         "small_descr":fubiaoti,
