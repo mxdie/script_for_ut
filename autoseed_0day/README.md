@@ -1,5 +1,5 @@
 # autoseed
-![](https://img.shields.io/badge/python-3.7-red.svg)
+![](https://img.shields.io/badge/python-3.7-red.svg) ![](https://img.shields.io/badge/ny-support-blue.svg)
 
 可以把ut2.14↑rss回来的东西直接转发到南洋。<br>
 
