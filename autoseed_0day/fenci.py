@@ -54,9 +54,6 @@ class fenci():
                     self.rule = self.rule.replace(i,self.compilerule[i])
                 n+=1
                 dict[i] = n
-            else:
-                self.res['msg'] = 'namerule error'
-                return
         try:
             find = re.search(self.rule,self.filename,re.I)
             for canshu in list(dict):
@@ -69,5 +66,11 @@ class fenci():
         if self.uprule:
             dict['name'] = dict['name'].replace(' ','.')
             self.res['upname'] = self.uprule.format(**dict)
+if __name__ == "__main__":
+    name = input('name:')
+    a = fenci(name)
+    print(a.res)
+    print(a.rule)
+    print(a.filename)
         
 
