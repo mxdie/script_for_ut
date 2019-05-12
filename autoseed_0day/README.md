@@ -43,8 +43,6 @@
 |name|`(.+?)`|string|
 |year|`(\\d+)`|string|
 |ep|`(\\d+)`|string|
-|resolution|`(720p|1080p|2160p)`|string|
-|source|`(bluray|web-dl|bdrip)`|string|
 |...|...|string|
 
 >自行修改添加
