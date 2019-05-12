@@ -66,3 +66,13 @@
 |选项-设置-目录-保存Torrent至|`F:\utorrent2.2.1\utorrent`|请与`config.json`里`ut_save`路径一致|
 |选项-设置-目录-自动载入Torrent于|`F:\dmhyload`|请与`config.json`里`ut_load`路径一致，并勾上删除载入的Torrent|
 |选项-设置-高级-运行程序-下载完成时运行|`F:\autoseed_0day\start.bat "%D" "%N" "%F"`|项目`start.bat`文件路径|
+
+#### FAQ
+1. `搜不到bgm链接，输入这个番更通俗易懂的名字叭：`
+   自行前往`bgm.tv`搜索该番的中文名
+2. `中译名是xxx吗`
+   每个番第一次下载都会出现的，如果脚本匹配无误直接回车即可
+3. `upload种子上传失败`
+   两种情况，一是网站已有该种子；二是自动做种时检测到的从NYPT`down`下的种子会弹出，关闭即可
+4. `其他问题`
+   可能是网不好引起的一系列2333333
