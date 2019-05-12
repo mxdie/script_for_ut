@@ -38,7 +38,7 @@
 > 匹配规则
 
 |compile|正则表达式||
-|:--:|:--:|:--:|
+|:---:|:---:|:---:|
 |key|value|type|
 |name|`(.+?)`|string|
 |year|`(\\d+)`|string|
