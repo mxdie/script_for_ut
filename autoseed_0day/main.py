@@ -8,7 +8,6 @@ from shutil import copyfile
 from NexusFunc import NexusFunc
 from fenci import fenci
 import func
-import MediaInfoDLL3
 import bencode
 import os
 f_path=sys.argv[1]
@@ -131,24 +130,22 @@ elif nameinfo['type'] == 403:
         json.dump(data,f)
 
     #try:
-    mi = MediaInfoDLL3.MediaInfo()
     if f_name2:
-        mi.Open(f_path+'/'+f_name)
+        mi=MediaInfo.get_mediainfo(f_path+'/'+f_name, gs= False)
     else:
         try:
-            mi.Open(f_path+'/'+f_name+'.mkv')
+            mi=MediaInfo.get_mediainfo(f_path+'/'+f_name+'.mkv', gs= False)
         except:
-            pass
-    spinfo = mi.Inform()
-    mi.Close()
-    print(spinfo)
+            mi=MediaInfo.get_mediainfo(f_path+'/'+f_name+'.mp4', gs= False)
+        finally:
+            mi = ''
     #except:
     #    info =''
     #编辑上传信息
     fubiaoti=bgm_jj[1]+' '+bgm_jj[2]
     imdblianjie=''
     douban_url=''
-    jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+spinfo+'[/code]'+'[/fold]'
+    jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
     print(nameinfo['upname'])
     print(fubiaoti)
     print(jianjie)
@@ -171,3 +168,4 @@ nanyang.download(TorId, ut_load)
 # 删除
 os.remove('temp.torrent')
 os.remove(f_name+'.torrent')
+

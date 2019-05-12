@@ -5,9 +5,13 @@ from MediaInfoDLL3 import *
 import sys
 
 
-def get_mediainfo(path):
+def get_mediainfo(path, gs= True):
     mi = MediaInfo()
     mi.Open(path)
+    if not gs:
+        content= mi.Inform()
+        mi.Close()
+        return content
 
     name = mi.Get(Stream.General, 0, "FileName")
     time = mi.Get(Stream.General, 0, "Encoded_Date")
