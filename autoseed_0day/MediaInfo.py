@@ -83,7 +83,8 @@ CONTAINER......: {container}
 VIDEO.CODEC....: {code}
 FRAME.RATE.....: {fps}
 RESOLUTION.....: {fbl}
-{audio}{text}
+{audio}
+{text}
 CHAPTERS.......: {chapter}[/code][/font]'''.format(
         name=name,
         time=time,
