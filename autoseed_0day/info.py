@@ -21,7 +21,7 @@ def get_douban_url_db(film_name,film_year):
         if info['y'] == int(film_year):
             imdbid = info['id']
     if not imdbid:return
-    film_name_html=request.Request(url='https://api.douban.com/v2/movie/imdb/'+imdbid,headers=headers)
+    film_name_html=request.Request(url='https://api.douban.com/v2/movie/imdb/{}?apikey=0df993c66c0c636e29ecbb5344252a4a'.format(imdbid),headers=headers)
     with request.urlopen(film_name_html) as f:
           doubaninfo= json.loads(f.read().decode('utf-8')) 
     return doubaninfo['alt'].replace('/movie/','/subject/')   
