@@ -71,7 +71,7 @@ def get_douban_jj(douban_url):
     # 打开url
     headers= {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
     douban_html=request.Request(url=douban_url,headers=headers)
-    html=request.urlopen(douban_html).read().decode('utf-8')
+    html=request.urlopen(douban_html,timeout = 30).read().decode('utf-8')
 
     # 美丽肥皂
     soup=BeautifulSoup(html,"html.parser")
@@ -226,14 +226,14 @@ def get_douban_jj(douban_url):
     #获取获奖情况
     
     #输出
-    return (name_ch,imdblianjie,jianjie)
+    return (name_ch,imdb,jianjie)
 
 ########################获取获奖情况########################
 def douban_hj(douban_url):
     douban_url=douban_url+'/awards/'
     headers= {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
     douban_html=request.Request(url=douban_url,headers=headers)
-    html=request.urlopen(douban_html).read().decode('utf-8')
+    html=request.urlopen(douban_html,timeout = 30).read().decode('utf-8')
 
     if 'class="awards"' in html:
         soup=BeautifulSoup(html,"html.parser")
