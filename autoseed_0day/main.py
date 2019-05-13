@@ -88,7 +88,7 @@ if __name__ == "__main__":
         files ={'file': open('temp.torrent', 'rb')}
         data={"type":'401',
             "name":nameinfo['upname'],
-            "small_descr":name_ch +' [本资源发种姬自动发布，有问题请尽快PM]',
+            "small_descr":name_ch +' [本资源发种姬自动发布，有问题请尽快举报]',
             "url":imdblianjie,
             "dburl":db_url,
             "descr":jianjie,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         except:
             mi=''
         #编辑上传信息
-        fubiaoti=bgm_jj[1]+' '+bgm_jj[2] + ' [本资源傲娇姬自动发布，有问题请尽快PM]'
+        fubiaoti=bgm_jj[1]+' '+bgm_jj[2] + ' [本资源傲娇姬自动发布，有问题请尽快举报]'
         imdblianjie=''
         douban_url=''
         jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
