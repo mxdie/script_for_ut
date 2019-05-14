@@ -1,5 +1,4 @@
 ## 导航
-----
 
 * [autoseed](#autoseed)
   * [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
@@ -24,7 +23,9 @@
 > clone 本项目至本地任一文件夹
 
 ### 1 配置config
+
 > cd autoseed_0day
+>
 > cp config.sample.json config.json
 
 #### nanyang
