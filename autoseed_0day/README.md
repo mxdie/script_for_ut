@@ -19,6 +19,8 @@
 > clone 本项目至本地任一文件夹
 
 ### 1 配置config
+> cd autoseed_0day
+> cp config.sample.json config.json
 
 #### nanyang
 
