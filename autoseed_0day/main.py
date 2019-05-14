@@ -11,6 +11,13 @@ import func
 import bencode
 import os
 
+nanyang = NexusFunc('nanyang')
+def fazhong(files,data,ut_load):
+    nanyang.upload(files, data)
+    if nanyang.res['msg'] !='666': return nanyang.res['msg']
+    nanyang.download(DlPath = ut_load)
+    return nanyang.res['msg']
+
 if __name__ == "__main__":    
     f_path=sys.argv[1] #文件路径
     f_name=sys.argv[2] #文件名
@@ -90,7 +97,7 @@ if __name__ == "__main__":
         files ={'file': open('temp.torrent', 'rb')}
         data={"type":'401',
             "name":nameinfo['upname'],
-            "small_descr":name_ch +' [本资源发种姬自动发布，有问题请尽快举报]',
+            "small_descr":name_ch ,
             "url":imdblianjie,
             "dburl":db_url,
             "descr":jianjie,
@@ -126,10 +133,11 @@ if __name__ == "__main__":
         except:
             mi=''
         #编辑上传信息
-        fubiaoti=bgm_jj[1]+' '+bgm_jj[2] + ' [本资源傲娇姬自动发布，有问题请尽快举报]'
+        fubiaoti=bgm_jj[1]+' '+bgm_jj[2]
         imdblianjie=''
         douban_url=''
-        jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
+        warning="[quote][本资源傲娇姬自动发布，有问题请尽快举报][/quote]"
+        jianjie=warning+bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
         print(bgm_jj[1]+ ' 简介已就绪')
 
         #填写表单
@@ -143,17 +151,25 @@ if __name__ == "__main__":
             "uplver":'yes'}
 
     #发布
-    nanyang = NexusFunc('nanyang')
-    for i in range(3):
-        try:
-            TorId= nanyang.upload(files, data)
-        except:
-            pass
-        if TorId : break
-    #下载种子
-    nanyang.download(TorId, ut_load)
-    # 删除种子
-  
+    i = 0
+    while 1:
+        i+=1
+        msg = fazhong(files, data, ut_load)
+        if msg == '666':
+            print('发布完成')
+            break
+        elif msg == 'upload http error':
+            print(msg)
+            if i <= 3:
+                time.sleep(5)
+            else:
+                resp = input('retry?(y/n)')
+                if resp == 'n' or resp == 'N':
+                    break
+        else:
+            print(msg)
+            break
+    #删临时文件
     try:
         files = os.listdir()
         for i in range(len(files)):

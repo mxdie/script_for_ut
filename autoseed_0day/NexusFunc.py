@@ -13,6 +13,7 @@ class NexusFunc():
         读取配置参数
         添加cookie
         '''
+        self.res ={'msg':'666', 'torid':''}
         #config
         with open('config.json','r') as f:
             config = json.load(f)
@@ -43,32 +44,31 @@ class NexusFunc():
             try:
                 upload_reponse= requests.post(url=UpUrl ,headers=headers, data=data, files=files, timeout= 30)
                 upload_reponse.raise_for_status()
-                print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload网络连接成功')
                 break
             except:
-                print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload网络连接失败'+ str(i+1)+ '次')
                 if i == 2: 
-                    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload网络连接没救了')
+                    self.res['msg'] = 'upload http error' #upload网络连接失败
                     return
         TorId=''.join(re.findall('%3D(.+?)%26',upload_reponse.url)).strip()
         if not TorId: 
-            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload种子上传失败')
+            self.res['msg'] = 'upload torrent error' #upload种子上传失败
             return
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' upload成功 ID:'+ TorId)
-        return TorId
+        self.res['torid'] = TorId
     
     def download(self, TorId='', DlPath='', DlUrl= '' ):
-        if not TorId: return
+        if not TorId: 
+            TorId = self.res['torid']
+            if not TorId:
+               self.res['msg'] = 'torid error'  #没有获取到种子id
+               return
         if not DlUrl: DlUrl= self.url+ 'download.php?id=' +TorId
         for i in range(3):
             try:
                 request.urlretrieve(DlUrl, DlPath+ TorId+'.torrent')
-                print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' 种子下载成功')
                 return
-            except:
-                print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' 种子下载失败'+ str(i+1)+ '次')
+            except:                
                 if i == 2: 
-                    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+ ' 种子下载没救了')
+                    self.res['msg'] = 'tor download error' #种子下载失败
                     return
 
         
