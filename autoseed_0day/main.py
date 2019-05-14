@@ -81,7 +81,9 @@ if __name__ == "__main__":
             mi=MediaInfo.get_mediainfo(file_path)
         except:
             mi = ''
-        jianjie=jianjie+'\n'+'\n'+mi
+        warning="[quote]本资源为发种姬自动发布，发现问题可点击举报[/quote]"
+        jianjie=warning+jianjie+'\n'+'\n'+mi
+        # print(jianjie)
         print(name_ch + ' 简介已就绪')
 
         #填写表单
