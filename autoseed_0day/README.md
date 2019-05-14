@@ -1,3 +1,6 @@
+## 导航
+----
+
 * [autoseed](#autoseed)
   * [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
     * [1 配置config](#1-%E9%85%8D%E7%BD%AEconfig)
@@ -8,6 +11,8 @@
       * [requirements](#requirements)
       * [uTorrent](#utorrent)
       * [FAQ](#faq)
+
+----
 
 # autoseed
 ![](https://img.shields.io/badge/python-3.7-red.svg) ![](https://img.shields.io/badge/ny-support-blue.svg)
