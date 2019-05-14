@@ -11,6 +11,13 @@ import func
 import bencode
 import os
 
+nanyang = NexusFunc('nanyang')
+def fazhong(files,data,ut_load):
+    nanyang.upload(files, data)
+    if nanyang.res['msg'] !='666': return nanyang.res['msg']
+    nanyang.download(DlPath = ut_load)
+    return nanyang.res['msg']
+
 if __name__ == "__main__":    
     f_path=sys.argv[1] #文件路径
     f_name=sys.argv[2] #文件名
@@ -141,17 +148,25 @@ if __name__ == "__main__":
             "uplver":'yes'}
 
     #发布
-    nanyang = NexusFunc('nanyang')
-    for i in range(3):
-        try:
-            TorId= nanyang.upload(files, data)
-        except:
-            pass
-        if TorId : break
-    #下载种子
-    nanyang.download(TorId, ut_load)
-    # 删除种子
-  
+    i = 0
+    while 1:
+        i+=1
+        msg = fazhong(files, data, ut_load)
+        if msg == '666':
+            print('发布完成')
+            break
+        elif msg == 'upload http error':
+            print(msg)
+            if i <= 3:
+                time.sleep(5)
+            else:
+                resp = input('retry?(y/n)')
+                if resp == 'n' or resp == 'N':
+                    break
+        else:
+            print(msg)
+            break
+    #删临时文件
     try:
         files = os.listdir()
         for i in range(len(files)):
