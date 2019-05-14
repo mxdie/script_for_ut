@@ -91,14 +91,16 @@ if __name__ == "__main__":
             mi=MediaInfo.get_mediainfo(file_path)
         except:
             mi = ''
-        jianjie=jianjie+'\n'+'\n'+mi
+        warning="[quote]本资源为发种姬自动发布，发现问题可点击举报[/quote]"
+        jianjie=warning+jianjie+'\n'+'\n'+mi
+        # print(jianjie)
         print(name_ch + ' 简介已就绪')
 
         #填写表单
         files ={'file': open('temp.torrent', 'rb')}
         data={"type":'401',
             "name":nameinfo['upname'],
-            "small_descr":name_ch +' [本资源发种姬自动发布，有问题请尽快举报]',
+            "small_descr":name_ch ,
             "url":imdblianjie,
             "dburl":db_url,
             "descr":jianjie,
@@ -134,10 +136,11 @@ if __name__ == "__main__":
         except:
             mi=''
         #编辑上传信息
-        fubiaoti=bgm_jj[1]+' '+bgm_jj[2] + ' [本资源傲娇姬自动发布，有问题请尽快举报]'
+        fubiaoti=bgm_jj[1]+' '+bgm_jj[2]
         imdblianjie=''
         douban_url=''
-        jianjie=bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
+        warning="[quote][本资源傲娇姬自动发布，有问题请尽快举报][/quote]"
+        jianjie=warning+bgm_jj[0]+'[color=red][size=4][b]视频信息[/b][/size][/color]'+'\n'+'[fold]'+'[code]'+mi+'[/code]'+'[/fold]'
         print(bgm_jj[1]+ ' 简介已就绪')
 
         #填写表单
