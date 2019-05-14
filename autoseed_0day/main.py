@@ -11,8 +11,9 @@ import func
 import bencode
 import os
 
-nanyang = NexusFunc('nanyang')
-def fazhong(files,data,ut_load):
+
+def fazhong(WebSiteconf,files,data,ut_load):
+    nanyang = NexusFunc(WebSiteConf)
     nanyang.upload(files, data)
     if nanyang.res['msg'] !='666': return nanyang.res['msg']
     nanyang.download(DlPath = ut_load)
@@ -39,17 +40,19 @@ if __name__ == "__main__":
         sys.exit()
     print('文件路径： '+file_path)
     print('视频命名： '+vedio_name)
-    #正则匹配
-    nameinfo = fenci(vedio_name).res
-    if nameinfo['msg'] !=666:
-        print(nameinfo['msg'])
-        sys.exit()
-    print(nameinfo)
     #加载配置
     with open('config.json','r') as f:
         config = json.load(f)
     ut_save = config['path']['ut_save']
     ut_load = config['path']['ut_load']
+    WebSiteConf = config['nanyang']
+    NameRuleConf = config['namerule']
+    CompileConf = config['compile']
+    #正则匹配
+    nameinfo = fenci(vedio_name,NameRuleConf,CompileConf).res
+    if nameinfo['msg'] !=666:
+        print(nameinfo['msg'])
+        sys.exit()
     # 移动种子到当前目录
     torrent_path=ut_save+f_name+'.torrent'
     print('种子路径： '+torrent_path)
@@ -151,7 +154,7 @@ if __name__ == "__main__":
     i = 0
     while 1:
         i+=1
-        msg = fazhong(files, data, ut_load)
+        msg = fazhong(WebSiteConf, files, data, ut_load)
         if msg == '666':
             print('发布完成')
             break

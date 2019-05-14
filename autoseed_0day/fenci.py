@@ -3,36 +3,30 @@ import re
 
 
 class fenci():
-    def __init__(self,filename: str):
+    def __init__(self,filename: str, NameRuleConf: dict, CompileConf: dict):
         self.filename= filename
         self.res = {'msg':666}
         self.group = ''
         self.res['upname'] = filename
-        try:
-            with open('config.json','r') as f:
-                config = json.load(f)
-            namerule = config['namerule']
-            self.compilerule = config['compile']
-            suportlist = list(namerule) 
-        except:
-            self.res['msg'] = 'load config error'
+        self.compilerule = CompileConf
+        suportlist = list(NameRuleConf) 
         for group in suportlist:
             if group.lower() in filename.lower():
                 self.group = group
-                self.res['type'] = namerule[group][0]
-                self.rule = namerule[group][1]
+                self.res['type'] = NameRuleConf[group][0]
+                self.rule = NameRuleConf[group][1]
                 break
         if not self.group:
             self.res['msg'] = 'suport error'
             return
         self.uprule = ''
-        if isinstance(namerule[group][0],int):
-            self.res['type'] = namerule[group][0]
-            self.rule = namerule[group][1]
-            if len(namerule[group]) ==3: self.uprule =namerule[group][2]
+        if isinstance(NameRuleConf[group][0],int):
+            self.res['type'] = NameRuleConf[group][0]
+            self.rule = NameRuleConf[group][1]
+            if len(NameRuleConf[group]) ==3: self.uprule =NameRuleConf[group][2]
             self.fenci_()
         else:
-            for i in namerule[group]:
+            for i in NameRuleConf[group]:
                 self.res['type'] = i[0]
                 self.rule = i[1]
                 if len(i) ==3: self.uprule =i[2]
@@ -67,10 +61,6 @@ class fenci():
             dict['name'] = dict['name'].replace(' ','.')
             self.res['upname'] = self.uprule.format(**dict)
 if __name__ == "__main__":
-    name = input('name:')
-    a = fenci(name)
-    print(a.res)
-    print(a.rule)
-    print(a.filename)
+    pass
         
 

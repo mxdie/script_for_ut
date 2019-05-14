@@ -8,17 +8,15 @@ import requests
 import time
 import re
 class NexusFunc():
-    def __init__(self, WebSiteName: str):
+    def __init__(self, WebSiteConf: str):
         '''
         读取配置参数
+        WebSiteConf = {url,cookie}
         添加cookie
         '''
         self.res ={'msg':'666', 'torid':''}
-        #config
-        with open('config.json','r') as f:
-            config = json.load(f)
-        self.url = config[WebSiteName]['url']
-        self.cookie = config[WebSiteName]['cookie']
+        self.url = WebSiteConf['url']
+        self.cookie = WebSiteConf['cookie']
         #header
         opener = request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36'),
