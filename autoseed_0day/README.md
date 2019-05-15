@@ -1,60 +1,81 @@
-## 导航
+# autoseed
+![](https://img.shields.io/badge/python-3.7-red.svg)![](https://img.shields.io/badge/support-ny-blue.svg)![](https://img.shields.io/badge/powered-ny-green.svg)
 
-* [autoseed](#autoseed)
-  * [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
-    * [1 配置config](#1-%E9%85%8D%E7%BD%AEconfig)
-      * [nanyang](#nanyang)
-      * [path](#path)
-      * [namerule](#namerule)
-    * [2 使用](#2-%E4%BD%BF%E7%94%A8)
-      * [requirements](#requirements)
-      * [uTorrent](#utorrent)
-      * [FAQ](#faq)
+可以把支持下载完成运行程序的bt客户端rss回来的东西直接转发到南洋。
+
+<!--
+
+
+## 导航
+- [autoseed](#autoseed)
+  - [导航](#%E5%AF%BC%E8%88%AA)
+  - [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+    - [UT设置](#ut%E8%AE%BE%E7%BD%AE)
+    - [config配置](#config%E9%85%8D%E7%BD%AE)
+      - [nanyang](#nanyang)
+      - [path](#path)
+      - [namerule](#namerule)
+      - [匹配规则](#%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99)
+    - [2 使用](#2-%E4%BD%BF%E7%94%A8)
+      - [requirements](#requirements)
+      - [uTorrent](#utorrent)
+      - [FAQ](#faq)
+-->
 
 ----
 
-# autoseed
-![](https://img.shields.io/badge/python-3.7-red.svg) ![](https://img.shields.io/badge/ny-support-blue.svg)
-
-可以把ut2.14↑rss回来的东西直接转发到南洋。
-
 ## 使用方法
 
-> clone 本项目至本地任一文件夹
+> clone 本项目至本地任一文件夹 `"~\script_for_ut\"`
 
-### 1 配置config
+### UT设置
 
-> cd autoseed_0day
->
-> cp config.sample.json config.json
+* 用来RSS的UT，勾选并指定文件和种子保存位置
+
+![](https://img.ajycc20.xyz/imgs/2019/05/eb58f82ff31b616f.png)
+
+* 用来做种的UT（可以和RSS是同一个），勾选并使文件保存位置和RSS的UT相同，勾选并指定自动载入种子位置
+
+![](https://img.ajycc20.xyz/imgs/2019/05/125a12aed1c8994f.png)
+
+### config配置
+
+* 将`data.sample.json`另存为`data.json`
+* 将`config.sample.json`另存为`config.json`并打开
 
 #### nanyang
 
-把cookie填上去。
+* 把字符串式cookie填上去，获取方式见下图，可以整个复制替换原默认值。
+
+![](https://img.ajycc20.xyz/imgs/2019/05/45b5948171512389.png)
 
 #### path
 
-* `ut_save`: `"F:/utorrent2.2.1/utorrent/"`  本地utorrent路径
-* `ut_load`: `F:/dmhyload/` 本地任一空文件夹
+* `ut_save`: `"E:\save\"`  即上文RSS的UT保存种子的路径
+* `ut_load`: `E:\save\` 即上文做种的UT载入种子的路径
 
 #### namerule
 
-> 以喵萌字幕组为例
+* key值为资源组，**只会转发填写在这里的资源组发布的资源**，以wiki为例
 
 |namerule||
 |:---:|:---:|
 |key|value|
-|Nekomoe kissaten|[403,"[group][name][ep][resolution][sub].format","{name}.{ep}.TVRip.{sub}.{resolution}.{format}-{group}"]|
+|wiki|[401,"name.year.resolution.source.codec-group.mkv","{name}.{year}.{source}.{resolution}.{codec}-{group}"]|
 
 **值参数:**
 
 |字段|字段说明|类型|必填|说明|
 |:---:|:---:|:---:|:---:|:---:|
-|403|资源类别|int|Y|网站种子分类的`cat`参数|
-|`[group][name][ep][resolution][sub].format`|种子名|string|Y|种子名,如`[Nekomoe kissaten][Grisaia Phantom Trigger][02][720p][CHS].mp4`|
-|`{name}.{ep}.TVRip.{sub}.{resolution}.{format}-{group}`|发布资源名|string|Y|网站种子主标题名,如`Grisaia.Phantom.Trigger.02.TVRip.CHS.720p.mp4-Nekomoe kissaten`|
+|`401`|资源类别|int|Y|网站种子分类的`cat`参数|
+|`name.year.resolution.source.codec-group.mkv`|资源名格式|string|Y|使用关键字替代原资源命名中的需要提取的数据，`401`类资源至少包含`name`和`year`两个关键字，`403`类至少有`name`|
+|`{name}.{year}.{source}.{resolution}.{codec}-{group}`|发布资源名|string|N|发布资源的标题名，由关键字和普通字符组成，关键字使用`{}`，且只能使用资源名格式字段中使用过的关键字，缺省则直接使用原资源名发布|
 
-> 匹配规则
+* 会不定期更新，不会写可以来gayhub更新config
+
+#### 匹配规则
+
+* 定义关键字，及该关键字的正则匹配式
 
 |compile|正则表达式||
 |:---:|:---:|:---:|
@@ -64,7 +85,7 @@
 |ep|`(\\d+)`|string|
 |...|...|string|
 
->自行修改添加
+* 会不定期更新，不会写可以gayhub更新config
 
 ### 2 使用
 
@@ -72,7 +93,19 @@
 - [x] bs4
 - [x] requests
 
+> pip3 install bs4
+> 
+> pip3 install requests
+
 #### uTorrent
+
+* 为RSS的UT填入下载完成后运行 `~\script_for_ut\autoseed_0day\start.bat "%D" "%N" "%F"`
+
+![](https://img.ajycc20.xyz/imgs/2019/05/07ebc7bd5509f8fb.png)
+
+**enjoy!该ut完成的所有种子，只要符合规则都会自动发布，并下载种子至ut_load路径，由另一个ut载入做种**
+
+<!--
 
 1. 添加[动漫花园](share.dmhy.org)的[rss链接](https://share.dmhy.org/topics/rss/sort_id/2/rss.xml) 可能需要添加个人中心的`uTorrent Key`
 2. 添加适配`config.json`里匹配的字幕组rss规则
@@ -99,4 +132,5 @@
 4. `其他问题`
    
    可能是网不好引起的一系列2333333
+-->
 
