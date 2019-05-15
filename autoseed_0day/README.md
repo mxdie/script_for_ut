@@ -1,5 +1,5 @@
 # autoseed
-![](https://img.shields.io/badge/python-3.7-red.svg)![](https://img.shields.io/badge/support-ny-blue.svg)![](https://img.shields.io/badge/powered-ny-green.svg)
+![](https://img.shields.io/badge/python-3.7-red.svg) ![](https://img.shields.io/badge/support-ny-blue.svg) ![](https://img.shields.io/badge/powered-ny-green.svg)
 
 可以把支持下载完成运行程序的bt客户端rss回来的东西直接转发到南洋。
 
