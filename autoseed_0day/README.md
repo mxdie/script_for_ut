@@ -28,7 +28,7 @@
 
 > clone 本项目至本地任一文件夹 `"~\script_for_ut\"`
 
-### UT设置
+### 1 UT设置
 
 * 用来RSS的UT，勾选并指定文件和种子保存位置
 
@@ -38,7 +38,7 @@
 
 ![](https://img.ajycc20.xyz/imgs/2019/05/125a12aed1c8994f.png)
 
-### config配置
+### 2 config配置
 
 * 将`data.sample.json`另存为`data.json`
 * 将`config.sample.json`另存为`config.json`并打开
@@ -63,7 +63,7 @@
 |key|value|
 |wiki|[401,"name.year.resolution.source.codec-group.mkv","{name}.{year}.{source}.{resolution}.{codec}-{group}"]|
 
-**值参数:**
+* 值参数:
 
 |字段|字段说明|类型|必填|说明|
 |:---:|:---:|:---:|:---:|:---:|
@@ -87,7 +87,7 @@
 
 * 会不定期更新，不会写可以gayhub更新config
 
-### 2 使用
+### 3 使用
 
 #### requirements
 - [x] bs4
